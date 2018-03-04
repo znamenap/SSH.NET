@@ -155,27 +155,27 @@ namespace Renci.SshNet.Tests.Classes
                     {
                         sftp.CreateDirectory(string.Format("test_{0}", i));
                     }
-                    Debug.WriteLine("Created {0} directories within {1} seconds", count, stopwatch.Elapsed.TotalSeconds);
+                    Debug.WriteLine(string.Format("Created {0} directories within {1} seconds", count, stopwatch.Elapsed.TotalSeconds));
 
-                    stopwatch.Restart();
+                    stopwatch.Reset(); stopwatch.Start();
                     var files = sftp.EnumerateDirectory(".");
-                    Debug.WriteLine("Listed {0} directories within {1} seconds", count, stopwatch.Elapsed.TotalSeconds);
+                    Debug.WriteLine(string.Format("Listed {0} directories within {1} seconds", count, stopwatch.Elapsed.TotalSeconds));
 
                     //  Ensure that directory has at least 10000 items
-                    stopwatch.Restart();
+                    stopwatch.Reset(); stopwatch.Start();
                     var actualCount = files.Count();
-                    Assert.IsTrue(actualCount >= 10000);
-                    Debug.WriteLine("Used {0} items within {1} seconds", actualCount, stopwatch.Elapsed.TotalSeconds);
+                    Assert.IsTrue(actualCount >= count);
+                    Debug.WriteLine(string.Format("Used {0} items within {1} seconds", actualCount, stopwatch.Elapsed.TotalSeconds));
 
                     sftp.Disconnect();
                 }
             }
             finally
             {
-                stopwatch.Restart();
+                stopwatch.Reset(); stopwatch.Start();
                 RemoveAllFiles();
                 stopwatch.Stop();
-                Debug.WriteLine("Removed all files within {0} seconds", stopwatch.Elapsed.TotalSeconds);
+                Debug.WriteLine(string.Format("Removed all files within {0} seconds", stopwatch.Elapsed.TotalSeconds));
             }
         }
 
